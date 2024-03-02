@@ -39,7 +39,7 @@ class Customer {
   }
 
   // Method to add a new transaction to the customer's transactions
-  addTransactions(amount) {
+  addTransaction(amount) {
     const newTransaction = new Transaction(amount);
     this.transactions.push(newTransaction);
   }
@@ -64,7 +64,7 @@ class Branch {
   }
 
   // Method to add a new customer to the branch
-  addCustomers(customer) {
+  addCustomer(customer) {
     if (!this.customers.includes(customer)) {
       this.customers.push(customer);
       return true; // Return true if customer is added successfully
@@ -74,12 +74,12 @@ class Branch {
   }
 
   // Method to add a transaction for a specific customer of the branch
-  addCustomersTransactions(customerId, amount) {
+  addCustomerTransaction(customerId, amount) {
     const customer = this.customers.find(
       (customer) => customer.getId() === customerId
     );
     if (customer) {
-      customer.addTransactions(amount);
+      customer.addTransaction(amount);
       return true; // Return true if transaction added successfully
     } else {
       return false; // Return false if customer not found
@@ -115,7 +115,7 @@ class Bank {
 
   // Method to add a new customer to a specific branch of the bank
   addCustomer(branch, customer) {
-    if (branch.addCustomers(customer)) {
+    if (branch.addCustomer(customer)) {
       console.log(
         `Customer "${customer.getName()}" has been added to ${branch.getName()} branch.`
       );
@@ -132,7 +132,7 @@ class Bank {
 
   // Method to add a transaction for a specific customer of a specific branch
   addCustomerTransaction(branch, customerId, amount) {
-    const result = branch.addCustomersTransactions(customerId, amount);
+    const result = branch.addCustomerTransaction(customerId, amount);
     if (result) {
       console.log(
         `Transaction successful for Customer ID: ${customerId} in ${branch.getName()} branch.`
@@ -192,7 +192,7 @@ arizonaBank.addCustomerTransaction(westBranch, customer1.getId(), 3000);
 arizonaBank.addCustomerTransaction(westBranch, customer1.getId(), 2000);
 arizonaBank.addCustomerTransaction(westBranch, customer2.getId(), 3000);
 
-customer1.addTransactions(-1000);
+customer1.addTransaction(-1000);
 
 console.log(
   `Customer ${customer1.getName()}'s Balance: ${customer1.getBalance()}`
