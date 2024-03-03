@@ -190,6 +190,24 @@ class Bank {
     });
     console.log("--------------------------------------------");
   }
+
+  // Method to search for customers across all branches by name or ID
+  searchCustomers(query: string): [Customer, Branch][] {
+    // We nned the customer and branch names so we will return both as result
+    const results: [Customer, Branch][] = [];
+    this.branches.forEach((branch) => {
+      const customers = branch.getCustomers();
+      customers.forEach((customer) => {
+        if (
+          customer.name.toLowerCase().includes(query.toLowerCase()) ||
+          customer.id.toString() === query
+        ) {
+          results.push([customer, branch]);
+        }
+      });
+    });
+    return results;
+  }
 }
 
 // ------------------------------------------------ Perform some transactions ------------------------------------------------
@@ -224,3 +242,18 @@ arizonaBank.listCustomers(westBranch, true);
 
 console.log("Customers at Sun Branch:");
 arizonaBank.listCustomers(sunBranch, true);
+
+// Example of search
+// Accept name and Id
+const searchFor = "4";
+console.log(`Search Results for '${searchFor}':`);
+const searchResult = arizonaBank.searchCustomers(searchFor);
+if (searchResult.length > 0) {
+  searchResult.forEach(([customer, branch]) => {
+    console.log(
+      `Customer Name: ${customer.name}, Customer ID: ${customer.id}, Found in Branch: ${branch.name}`
+    );
+  });
+} else {
+  console.log("No result is found for this name/Id");
+}

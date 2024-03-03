@@ -1,206 +1,207 @@
-// // Define a class for the customer's transactions
-// class Transaction {
-//   constructor(amount) {
-//     this.amount = amount;
-//     this.date = new Date();
-//   }
-// }
-
-// // Define a class to represent a bank customer
-// class Customer {
-//   constructor(name, id) {
-//     this.name = name;
-//     this.id = id;
-//     // Initialize an empty array to store transactions
-//     this.transactions = [];
-//   }
-
-//   // Method to retrieve the customer's name
-//   getName() {
-//     return this.name;
-//   }
-
-//   // Method to retrieve the customer's ID
-//   getId() {
-//     return this.id;
-//   }
-
-//   // Method to retrieve all transactions of the customer
-//   getTransactions() {
-//     return this.transactions;
-//   }
-
-//   // Method to calculate and return the customer's balance
-//   getBalance() {
-//     return this.transactions.reduce(
-//       (total, transaction) => total + transaction.amount,
-//       0
-//     );
-//   }
-
-//   // Method to add a new transaction to the customer's transactions
-//   addTransaction(amount) {
-//     const newTransaction = new Transaction(amount);
-//     this.transactions.push(newTransaction);
-//   }
-// }
-
-// // Define a class to bank's branches
-// class Branch {
-//   constructor(name) {
-//     this.name = name;
-//     // Initialize an empty array to store customers
-//     this.customers = [];
-//   }
-
-//   // Method to retrieve the branch name
-//   getName() {
-//     return this.name;
-//   }
-
-//   // Method to retrieve all customers of the branch
-//   getCustomers() {
-//     return this.customers;
-//   }
-
-//   // Method to add a new customer to the branch
-//   addCustomer(customer) {
-//     if (!this.customers.includes(customer)) {
-//       this.customers.push(customer);
-//       return true; // Return true if customer is added successfully
-//     } else {
-//       return false; // Return false if customer already exists
-//     }
-//   }
-
-//   // Method to add a transaction for a specific customer of the branch
-//   addCustomerTransaction(customerId, amount) {
-//     const customer = this.customers.find(
-//       (customer) => customer.getId() === customerId
-//     );
-//     if (customer) {
-//       customer.addTransaction(amount);
-//       return true; // Return true if transaction added successfully
-//     } else {
-//       return false; // Return false if customer not found
-//     }
-//   }
-// }
-
-// // Define a class to represent a bank
-// class Bank {
-//   constructor(name) {
-//     this.name = name;
-//     // Initialize an empty array to store branches
-//     this.branches = [];
-//   }
-
-//   // Method to add a new branch to the bank
-//   addBranch(branch) {
-//     if (!this.branches.includes(branch)) {
-//       this.branches.push(branch);
-//       console.log(
-//         `Branch "${branch.getName()}" has been added to ${this.name} bank.`
-//       );
-//       console.log("--------------------------------------------");
-//       return true; // Return true if branch added successfully
-//     } else {
-//       console.log(
-//         `Branch "${branch.getName()}" already exists in ${this.name} bank.`
-//       );
-//       console.log("--------------------------------------------");
-//       return false; // Return false if branch already exists
-//     }
-//   }
-
-//   // Method to add a new customer to a specific branch of the bank
-//   addCustomer(branch, customer) {
-//     if (branch.addCustomer(customer)) {
-//       console.log(
-//         `Customer "${customer.getName()}" has been added to ${branch.getName()} branch.`
-//       );
-//       console.log("--------------------------------------------");
-//       return true; // Return true if customer added successfully
-//     } else {
-//       console.log(
-//         `Customer "${customer.getName()}" already exists in ${branch.getName()} branch.`
-//       );
-//       console.log("--------------------------------------------");
-//       return false; // Return false if customer already exists
-//     }
-//   }
-
-//   // Method to add a transaction for a specific customer of a specific branch
-//   addCustomerTransaction(branch, customerId, amount) {
-//     const result = branch.addCustomerTransaction(customerId, amount);
-//     if (result) {
-//       console.log(
-//         `Transaction successful for Customer ID: ${customerId} in ${branch.getName()} branch.`
-//       );
-//       console.log("--------------------------------------------");
-//     } else {
-//       console.log(
-//         `Transaction failed for Customer ID: ${customerId}. Customer not found in ${branch.getName()} branch.`
-//       );
-//       console.log("--------------------------------------------");
-//     }
-//     return result; // Return true if transaction added successfully, false otherwise
-//   }
-
-//   // Method to find a branch by its name
-//   findBranchByName(branchName) {
-//     return this.branches.find((branch) => branch.getName() === branchName);
-//   }
-
-//   // Method to check if a given branch exists in the bank
-//   checkBranch(branch) {
-//     return this.branches.includes(branch);
-//   }
-
-//   // Method to list all customers of a specific branch and including their transactions (optional)
-//   listCustomers(branch, includeTransactions) {
-//     console.log(`Customers at ${branch.getName()} branch:`);
-//     branch.getCustomers().forEach((customer) => {
-//       console.log(`Customer Name: ${customer.getName()}`);
-//       console.log(`Customer ID: ${customer.getId()}`);
-//       if (includeTransactions) {
-//         console.log(`Transactions:`, customer.getTransactions());
-//       }
-//       console.log("---------------------");
-//     });
-//     console.log("--------------------------------------------");
-//   }
-// }
-
-// // ------------------------------------------------ Perform some transactions ------------------------------------------------
-// const arizonaBank = new Bank("Arizona");
-// const westBranch = new Branch("West Branch");
-// const sunBranch = new Branch("Sun Branch");
-// const customer1 = new Customer("John", 1);
-// const customer2 = new Customer("Anna", 2);
-// const customer3 = new Customer("John", 3);
-
-// arizonaBank.addBranch(westBranch);
-// arizonaBank.addBranch(sunBranch);
-
-// arizonaBank.addCustomer(westBranch, customer1);
-// arizonaBank.addCustomer(westBranch, customer3);
-// arizonaBank.addCustomer(sunBranch, customer1);
-// arizonaBank.addCustomer(sunBranch, customer2);
-
-// arizonaBank.addCustomerTransaction(westBranch, customer1.getId(), 3000);
-// arizonaBank.addCustomerTransaction(westBranch, customer1.getId(), 2000);
-// arizonaBank.addCustomerTransaction(westBranch, customer2.getId(), 3000);
-
-// customer1.addTransaction(-1000);
-
-// console.log(
-//   `Customer ${customer1.getName()}'s Balance: ${customer1.getBalance()}`
-// );
-// console.log("--------------------------------------------");
-
-// console.log("Customers at West Branch:");
-// arizonaBank.listCustomers(westBranch, true);
-
-// console.log("Customers at Sun Branch:");
-// arizonaBank.listCustomers(sunBranch, true);
+// Define a class for the customer's transactions
+var Transaction = /** @class */ (function () {
+  function Transaction(amount) {
+    this.amount = amount;
+    this.date = new Date();
+  }
+  return Transaction;
+})();
+// Define a class to represent a bank customer
+var Customer = /** @class */ (function () {
+  function Customer(name, id) {
+    this.transactions = [];
+    this.name = name;
+    this.id = id;
+  }
+  // Method to retrieve the customer's name
+  Customer.prototype.getName = function () {
+    return this.name;
+  };
+  // Method to retrieve the customer's ID
+  Customer.prototype.getId = function () {
+    return this.id;
+  };
+  // Method to retrieve all transactions of the customer
+  Customer.prototype.getTransactions = function () {
+    return this.transactions;
+  };
+  // Method to calculate and return the customer's balance
+  Customer.prototype.getBalance = function () {
+    return this.transactions.reduce(function (total, transaction) {
+      return total + transaction.amount;
+    }, 0);
+  };
+  // Method to add a new transaction to the customer's transactions
+  Customer.prototype.addTransaction = function (amount) {
+    if (this.getBalance() + amount >= 0) {
+      var newTransaction = new Transaction(amount);
+      var lengthBefore = this.transactions.length;
+      var lengthAfter = this.transactions.push(newTransaction);
+      return lengthBefore < lengthAfter;
+    } else {
+      return false;
+    }
+  };
+  return Customer;
+})();
+// Define a class to bank's branches
+var Branch = /** @class */ (function () {
+  function Branch(name) {
+    this.name = name;
+    this.customers = [];
+  }
+  // Method to retrieve the branch name
+  Branch.prototype.getName = function () {
+    return this.name;
+  };
+  // Method to retrieve all customers of the branch
+  Branch.prototype.getCustomers = function () {
+    return this.customers;
+  };
+  // Method to add a new customer to the branch
+  Branch.prototype.addCustomer = function (customer) {
+    if (!this.customers.includes(customer)) {
+      this.customers.push(customer);
+      return true; // Return true if customer is added successfully
+    } else {
+      return false; // Return false if customer already exists
+    }
+  };
+  // Method to add a transaction for a specific customer of the branch
+  Branch.prototype.addCustomerTransaction = function (customerId, amount) {
+    var customer = this.customers.find(function (customer) {
+      return customer.getId() == customerId;
+    });
+    if (customer) {
+      customer.addTransaction(amount);
+      return true; // Return true if transaction added successfully
+    } else {
+      return false; // Return false if customer not found
+    }
+  };
+  return Branch;
+})();
+// Define a class to represent a bank
+var Bank = /** @class */ (function () {
+  function Bank(name) {
+    this.branches = [];
+    this.name = name;
+  }
+  // Method to add a new branch to the bank
+  Bank.prototype.addBranch = function (branch) {
+    if (!this.branches.includes(branch)) {
+      this.branches.push(branch);
+      console.log(
+        'Branch "'
+          .concat(branch.getName(), '" has been added to ')
+          .concat(this.name, " bank.")
+      );
+      console.log("--------------------------------------------");
+      return true; // Return true if branch added successfully
+    } else {
+      console.log(
+        'Branch "'
+          .concat(branch.getName(), '" already exists in ')
+          .concat(this.name, " bank.")
+      );
+      console.log("--------------------------------------------");
+      return false; // Return false if branch already exists
+    }
+  };
+  // Method to add a new customer to a specific branch of the bank
+  Bank.prototype.addCustomer = function (branch, customer) {
+    if (branch.addCustomer(customer)) {
+      console.log(
+        'Customer "'
+          .concat(customer.getName(), '" has been added to ')
+          .concat(branch.getName(), " branch.")
+      );
+      console.log("--------------------------------------------");
+      return true; // Return true if customer added successfully
+    } else {
+      console.log(
+        'Customer "'
+          .concat(customer.getName(), '" already exists in ')
+          .concat(branch.getName(), " branch.")
+      );
+      console.log("--------------------------------------------");
+      return false; // Return false if customer already exists
+    }
+  };
+  // Method to add a transaction for a specific customer of a specific branch
+  Bank.prototype.addCustomerTransaction = function (
+    branch,
+    customerId,
+    amount
+  ) {
+    var result = branch.addCustomerTransaction(customerId, amount);
+    if (result) {
+      console.log(
+        "Transaction successful for Customer ID: "
+          .concat(customerId, " in ")
+          .concat(branch.getName(), " branch.")
+      );
+      console.log("--------------------------------------------");
+    } else {
+      console.log(
+        "Transaction failed for Customer ID: "
+          .concat(customerId, ". Customer not found in ")
+          .concat(branch.getName(), " branch.")
+      );
+      console.log("--------------------------------------------");
+    }
+    return result; // Return true if transaction added successfully, false otherwise
+  };
+  // Method to find a branch by its name
+  Bank.prototype.findBranchByName = function (branchName) {
+    var foundedBranches = this.branches.filter(function (branch) {
+      return branch.getName() === branchName;
+    });
+    return foundedBranches.length > 0 ? foundedBranches : null;
+  };
+  // Method to check if a given branch exists in the bank
+  Bank.prototype.checkBranch = function (branch) {
+    return this.branches.includes(branch);
+  };
+  // Method to list all customers of a specific branch and including their transactions (optional)
+  Bank.prototype.listCustomers = function (branch, includeTransactions) {
+    console.log("Customers at ".concat(branch.getName(), " branch:"));
+    branch.getCustomers().forEach(function (customer) {
+      console.log("Customer Name: ".concat(customer.getName()));
+      console.log("Customer ID: ".concat(customer.getId()));
+      if (includeTransactions) {
+        console.log("Transactions:", customer.getTransactions());
+      }
+      console.log("---------------------");
+    });
+    console.log("--------------------------------------------");
+  };
+  return Bank;
+})();
+// ------------------------------------------------ Perform some transactions ------------------------------------------------
+var arizonaBank = new Bank("Arizona");
+var westBranch = new Branch("West Branch");
+var sunBranch = new Branch("Sun Branch");
+var customer1 = new Customer("John", 1);
+var customer2 = new Customer("Anna", 2);
+var customer3 = new Customer("John", 3);
+arizonaBank.addBranch(westBranch);
+arizonaBank.addBranch(sunBranch);
+arizonaBank.addCustomer(westBranch, customer1);
+arizonaBank.addCustomer(westBranch, customer3);
+arizonaBank.addCustomer(sunBranch, customer1);
+arizonaBank.addCustomer(sunBranch, customer2);
+arizonaBank.addCustomerTransaction(westBranch, customer1.getId(), 3000);
+arizonaBank.addCustomerTransaction(westBranch, customer1.getId(), 2000);
+arizonaBank.addCustomerTransaction(westBranch, customer2.getId(), 3000);
+customer1.addTransaction(-1000);
+console.log(
+  "Customer "
+    .concat(customer1.getName(), "'s Balance: ")
+    .concat(customer1.getBalance())
+);
+console.log("--------------------------------------------");
+console.log("Customers at West Branch:");
+arizonaBank.listCustomers(westBranch, true);
+console.log("Customers at Sun Branch:");
+arizonaBank.listCustomers(sunBranch, true);
