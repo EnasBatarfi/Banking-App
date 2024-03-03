@@ -44,6 +44,12 @@ class Customer {
 
   // Method to add a new transaction to the customer's transactions
   addTransaction(amount: number): boolean {
+    // Validate the amount type should be number
+    if (typeof amount !== "number" || isNaN(amount)) {
+      console.log("Invalid transaction amount.");
+      return false;
+    }
+
     if (this.getBalance() + amount >= 0) {
       const newTransaction = new Transaction(amount);
       const lengthBefore = this.transactions.length;
@@ -51,6 +57,9 @@ class Customer {
 
       return lengthBefore < lengthAfter;
     } else {
+      console.log(
+        `Transaction failed for Customer ID: ${this.id}. Insufficient amount to withdraw`
+      );
       return false;
     }
   }
@@ -77,6 +86,12 @@ class Branch {
 
   // Method to add a new customer to the branch
   addCustomer(customer: Customer): boolean {
+    // Validate customer object
+    if (!(customer instanceof Customer)) {
+      console.log("Invalid customer object.");
+      return false;
+    }
+
     if (!this.customers.includes(customer)) {
       this.customers.push(customer);
       return true; // Return true if customer is added successfully
@@ -91,9 +106,12 @@ class Branch {
       (customer) => customer.getId() == customerId
     );
     if (customer) {
-      customer.addTransaction(amount);
-      return true; // Return true if transaction added successfully
+      const result = customer.addTransaction(amount);
+      return result; // Return true if transaction added successfully
     } else {
+      console.log(
+        `Transaction failed for Customer ID: ${customerId}. Customer not found in ${this.getName()} branch.`
+      );
       return false; // Return false if customer not found
     }
   }
@@ -110,7 +128,13 @@ class Bank {
 
   // Method to add a new branch to the bank
   addBranch(branch: Branch): boolean {
-    if (!this.branches.includes(branch)) {
+    // Validate branch object
+    if (!(branch instanceof Branch)) {
+      console.log("Invalid branch object.");
+      return false;
+    }
+
+    if (!this.checkBranch(branch)) {
       this.branches.push(branch);
       console.log(
         `Branch "${branch.getName()}" has been added to ${this.name} bank.`
@@ -128,6 +152,11 @@ class Bank {
 
   // Method to add a new customer to a specific branch of the bank
   addCustomer(branch: Branch, customer: Customer): boolean {
+    if (!(branch instanceof Branch) || !(customer instanceof Customer)) {
+      console.log("Invalid branch or customer object.");
+      return false;
+    }
+
     if (branch.addCustomer(customer)) {
       console.log(
         `Customer "${customer.getName()}" has been added to ${branch.getName()} branch.`
@@ -149,6 +178,10 @@ class Bank {
     customerId: string | number,
     amount: number
   ): boolean {
+    if (!(branch instanceof Branch)) {
+      console.log("Invalid branch object.");
+      return false;
+    }
     const result = branch.addCustomerTransaction(customerId, amount);
     if (result) {
       console.log(
@@ -156,9 +189,6 @@ class Bank {
       );
       console.log("--------------------------------------------");
     } else {
-      console.log(
-        `Transaction failed for Customer ID: ${customerId}. Customer not found in ${branch.getName()} branch.`
-      );
       console.log("--------------------------------------------");
     }
     return result; // Return true if transaction added successfully, false otherwise
@@ -213,22 +243,27 @@ class Bank {
 // ------------------------------------------------ Perform some transactions ------------------------------------------------
 const arizonaBank = new Bank("Arizona");
 const westBranch = new Branch("West Branch");
+const westBranch2 = new Branch("West Branch");
 const sunBranch = new Branch("Sun Branch");
 const customer1 = new Customer("John", 1);
 const customer2 = new Customer("Anna", 2);
 const customer3 = new Customer("John", 3);
+const customer4 = new Customer("John", 1);
 
+arizonaBank.addBranch(westBranch);
 arizonaBank.addBranch(westBranch);
 arizonaBank.addBranch(sunBranch);
 
 arizonaBank.addCustomer(westBranch, customer1);
+arizonaBank.addCustomer(westBranch, customer1);
+arizonaBank.addCustomer(westBranch, customer4);
 arizonaBank.addCustomer(westBranch, customer3);
 arizonaBank.addCustomer(sunBranch, customer1);
 arizonaBank.addCustomer(sunBranch, customer2);
 
-arizonaBank.addCustomerTransaction(westBranch, customer1.getId(), 3000);
+arizonaBank.addCustomerTransaction(westBranch, customer1.getId(), -3000);
 arizonaBank.addCustomerTransaction(westBranch, customer1.getId(), 2000);
-arizonaBank.addCustomerTransaction(westBranch, customer2.getId(), 3000);
+arizonaBank.addCustomerTransaction(westBranch, customer2.getId(), 1000);
 
 customer1.addTransaction(-1000);
 
