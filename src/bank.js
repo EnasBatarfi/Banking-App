@@ -105,7 +105,7 @@ var Bank = /** @class */ (function () {
             console.log("Invalid branch object.");
             return false;
         }
-        if (!this.checkBranch(branch)) {
+        if (!this.checkBranch(branch) && !this.findBranchByName(branch.getName())) {
             this.branches.push(branch);
             console.log("Branch \"".concat(branch.getName(), "\" has been added to ").concat(this.name, " bank."));
             console.log("--------------------------------------------");
@@ -200,6 +200,7 @@ var customer3 = new Customer("John", 3);
 var customer4 = new Customer("John", 1);
 arizonaBank.addBranch(westBranch);
 arizonaBank.addBranch(westBranch);
+arizonaBank.addBranch(westBranch2);
 arizonaBank.addBranch(sunBranch);
 arizonaBank.addCustomer(westBranch, customer1);
 arizonaBank.addCustomer(westBranch, customer1);

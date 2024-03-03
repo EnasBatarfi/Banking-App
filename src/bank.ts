@@ -134,7 +134,7 @@ class Bank {
       return false;
     }
 
-    if (!this.checkBranch(branch)) {
+    if (!this.checkBranch(branch) && !this.findBranchByName(branch.getName())) {
       this.branches.push(branch);
       console.log(
         `Branch "${branch.getName()}" has been added to ${this.name} bank.`
@@ -252,6 +252,7 @@ const customer4 = new Customer("John", 1);
 
 arizonaBank.addBranch(westBranch);
 arizonaBank.addBranch(westBranch);
+arizonaBank.addBranch(westBranch2);
 arizonaBank.addBranch(sunBranch);
 
 arizonaBank.addCustomer(westBranch, customer1);
